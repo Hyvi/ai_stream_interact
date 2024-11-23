@@ -65,8 +65,11 @@ class ModelInteract(AIStreamInteractBase):
         if api_key:
             self.__api_key = api_key
         # self._ai_auth(self.__api_key)
-        self.text_model = genai.GenerativeModel('gemini-pro')
-        self.multimodal_model = genai.GenerativeModel('gemini-pro-vision')
+        # self.text_model = genai.GenerativeModel('gemini-pro')
+        # self.multimodal_model = genai.GenerativeModel('gemini-pro-vision')
+        
+        self.text_model = genai.GenerativeModel('gemini-1.5-pro')
+        self.multimodal_model = genai.GenerativeModel('gemini-1.5-pro')
 
     def _ai_interactive_mode(
         self,

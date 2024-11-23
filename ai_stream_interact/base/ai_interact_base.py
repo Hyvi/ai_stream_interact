@@ -14,7 +14,7 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.console import Console
 from rich.markdown import Markdown
-from pynput import keyboard
+# from pynput import keyboard
 from dotenv import load_dotenv
 
 from ai_stream_interact.streamer import Streamer
@@ -118,7 +118,7 @@ class AIStreamInteractBase:
             if self._running_with_speech_synthesis:
                 self._speech_synthesis_queue.put(out)
 
-    @interact_on_key("d")
+    # @interact_on_key("d")
     def ai_detect_object_mode(self) -> None:
         images = self._get_prompt_imgs_from_stream()
         output = self._ai_detect_object(images, self.custom_base_prompt)
@@ -188,6 +188,10 @@ class AIStreamInteractBase:
                 self.streamer.start_video_stream()
             self._start_key_listeners()
             self._console_interface.print("Running in detect mode. Press (d) to detect an object")
+            while True:
+                self._mode_dect = Prompt.ask("Choose a dectect", choices=["d","dc"], show_choices=False)
+                if self._mode_dect.startswith("d"):
+                    self.ai_detect_object_mode()
 
         if self._mode.startswith("i"):
             self._console_interface.print("Running in interact mode. Type 'exit' to go back to previous menu.")
@@ -209,6 +213,7 @@ class AIStreamInteractBase:
 
     def _init_streamer(self) -> Tuple[Streamer, int]:
         """Initialize the video stream from camera."""
+        """
         while True:
             cam_index = Prompt.ask("Set cam index", console=self._console_interface)
             valid_index = re.match("[0-9]+$", str(cam_index))
@@ -219,16 +224,20 @@ class AIStreamInteractBase:
                     break
                 self._console_warning.print("Unable to detect cam at this index, please try again", style="bold red")
             self._console_warning.print("Cam index must be an integer.", style="bold red")
-        return streamer, cam_index
+            """
+        streamer = Streamer(int(0))
+        return streamer, 0
 
     def _start_key_listeners(self) -> None:
         on_press_methods = self._get_on_press_interact_methods()
         if not on_press_methods:
             raise Exception("Can't call start method if no methods are decorated with interact_on_key")
+        """
         for method in on_press_methods:
             listener = keyboard.Listener(on_press=method)
             listener.start()
             self._key_listeners.append(listener)
+        """
 
     def _stop_key_listeners(self) -> None:
         for listener in self._key_listeners:
