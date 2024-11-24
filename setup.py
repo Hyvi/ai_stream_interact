@@ -22,7 +22,6 @@ setup(
         'python-dotenv',
         'ratelimit',
         'rich',
-        'TTS',
         'google-generativeai>=0.3.2'
     ],
     entry_points={

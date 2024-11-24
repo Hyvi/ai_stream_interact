@@ -189,7 +189,7 @@ class AIStreamInteractBase:
             self._start_key_listeners()
             self._console_interface.print("Running in detect mode. Press (d) to detect an object")
             while True:
-                self._mode_dect = Prompt.ask("Choose a dectect", choices=["d","dc"], show_choices=False)
+                self._mode_dect = Prompt.ask("Runing to dectect by Press (d)", choices=["d","dc"], show_choices=False)
                 if self._mode_dect.startswith("d"):
                     self.ai_detect_object_mode()
 
